@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>Gemini CommLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;800&display=swap');
+      
+      body {
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden; /* Prevent scrolling on mobile pull-to-refresh */
+      }
+      
+      .font-mono-display {
+        font-family: 'Share Tech Mono', monospace;
+      }
+
+      /* Speaker grille pattern */
+      .speaker-grille {
+        background-image: radial-gradient(circle, #000 2px, transparent 2.5px);
+        background-size: 6px 6px;
+        background-color: #333;
+      }
+
+      /* CRT Screen Effect */
+      .screen-glow {
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+      }
+      .screen-glow::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 2;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

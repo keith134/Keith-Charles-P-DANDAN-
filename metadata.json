@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Gemini CommLink",
+  "description": "A retro-styled, real-time AI walkie-talkie powered by Gemini Live API. Experience low-latency voice conversations with an intelligent agent.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
