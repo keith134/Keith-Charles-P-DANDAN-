@@ -94,15 +94,21 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-zinc-900 overflow-hidden select-none touch-none">
-      {/* Device Casing */}
-      <div className="relative w-full max-w-md bg-zinc-800 rounded-[3rem] p-6 shadow-2xl border-4 border-zinc-700 ring-1 ring-black">
-        
-        {/* Antenna */}
-        <div className="absolute -top-24 right-12 w-4 h-32 bg-zinc-600 rounded-t-lg border-l border-zinc-500 shadow-xl z-0 transition-transform origin-bottom duration-500 ease-in-out hover:rotate-2">
-            <div className="absolute top-0 w-full h-2 bg-zinc-900 rounded-full"></div>
-        </div>
+    <div className="flex flex-col items-center justify-between min-h-[100dvh] bg-zinc-900 overflow-hidden select-none touch-none pb-safe-area">
+      
+      {/* Top Spacer / Antenna Area */}
+      <div className="w-full flex justify-center pt-safe-top mt-4 flex-shrink-0">
+          <div className="relative">
+             {/* Antenna */}
+            <div className="absolute -top-32 left-1/2 ml-12 w-4 h-48 bg-zinc-600 rounded-t-lg border-l border-zinc-500 shadow-xl z-0 transition-transform origin-bottom duration-500 ease-in-out hover:rotate-2">
+                <div className="absolute top-0 w-full h-2 bg-zinc-900 rounded-full"></div>
+            </div>
+          </div>
+      </div>
 
+      {/* Main Device */}
+      <div className="relative w-full max-w-md bg-zinc-800 rounded-[3rem] p-6 shadow-2xl border-4 border-zinc-700 ring-1 ring-black z-10 mx-4 flex flex-col mb-4">
+        
         {/* Top Grill & Brand */}
         <div className="flex justify-between items-center mb-6 relative z-10">
             <div className="flex gap-1">
@@ -171,7 +177,7 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
         </div>
 
         {/* Controls Grid */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-6">
             {/* Channel/Preset Dial */}
             <div className="col-span-1 flex flex-col items-center gap-2">
                 <label className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Channel</label>
@@ -247,33 +253,4 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
                                 setSelectedPreset(preset);
                                 setShowSettings(false);
                             }}
-                            className={`w-full p-4 rounded-lg text-left font-mono text-sm border transition-all active:scale-95 ${selectedPreset.id === preset.id ? 'bg-zinc-800 border-emerald-500 text-emerald-400' : 'bg-transparent border-zinc-700 text-zinc-400 hover:bg-zinc-800'}`}
-                        >
-                            <div className="font-bold">{preset.name}</div>
-                            <div className="text-[10px] opacity-70 mt-1 line-clamp-2 leading-relaxed">{preset.systemInstruction}</div>
-                        </button>
-                    ))}
-                </div>
-                <button 
-                    onClick={() => setShowSettings(false)}
-                    className="mt-4 w-full py-4 bg-zinc-800 rounded-lg text-zinc-300 font-mono text-sm hover:bg-zinc-700 active:bg-zinc-600"
-                >
-                    CLOSE
-                </button>
-            </div>
-        )}
-
-      </div>
-      
-      {/* Footer Instructions */}
-      <div className="mt-8 text-center max-w-sm">
-        <p className="text-zinc-500 text-xs font-mono mb-2">
-            HOLD ORANGE BUTTON TO TALK
-        </p>
-        <p className="text-zinc-600 text-[10px]">
-            Mobile Optimized • Half-Duplex Radio
-        </p>
-      </div>
-    </div>
-  );
-};
+                            className={`w-full p-4 rounded-lg text-left font-mono text-sm border transition-all active:scale-95 ${selectedPreset.id === preset.id ? 'bg-zinc-800 border-emerald

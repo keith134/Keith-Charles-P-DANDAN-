@@ -1,0 +1,22 @@
+{
+  "name": "Gemini CommLink",
+  "short_name": "CommLink",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "orientation": "portrait",
+  "description": "Real-time AI Walkie Talkie",
+  "icons": [
+    {
+      "src": "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/radio/default/48px.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
+    },
+    {
+       "src": "https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/radio/default/48px.svg",
+       "sizes": "192x192",
+       "type": "image/svg+xml"
+    }
+  ]
+}

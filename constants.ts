@@ -12,6 +12,13 @@ export const VOICE_PRESETS: VoicePreset[] = [
     color: 'text-amber-500'
   },
   {
+    id: 'public-freq',
+    name: 'Open Frequency',
+    voiceName: 'Puck',
+    systemInstruction: 'You are simulating a busy open radio frequency. When the user speaks, reply as if you are a random person on the same channel (e.g., a trucker, a boat captain, a security guard, or an amateur radio enthusiast). Keep replies short, static-filled, and realistic. Use "Over" at the end. Change your persona slightly each time to simulate a shared network.',
+    color: 'text-cyan-400'
+  },
+  {
     id: 'explorer',
     name: 'Expedition Lead',
     voiceName: 'Fenrir',
