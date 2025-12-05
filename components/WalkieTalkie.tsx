@@ -58,11 +58,24 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
     };
   }, [isConnected]);
 
+  // Haptic Feedback Helper
+  const triggerHaptic = (pattern: number | number[]) => {
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          try {
+              navigator.vibrate(pattern);
+          } catch (e) {
+              console.log("Haptics not supported or blocked");
+          }
+      }
+  };
+
   // Toggle power
   const handlePower = () => {
     if (isConnected || isConnecting) {
+      triggerHaptic(200); // Long vibration for power off
       disconnect();
     } else {
+      triggerHaptic([50, 50, 50]); // Triple pulse for startup
       connect();
     }
   };
@@ -72,6 +85,7 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
     // Prevent default to stop scrolling/selecting on mobile
     if (e.cancelable) e.preventDefault();
     if (isConnected) {
+        triggerHaptic(50); // Sharp click on press
         setTalking(true);
     }
   };
@@ -79,6 +93,7 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
   const handlePTTEnd = (e: React.MouseEvent | React.TouchEvent) => {
     if (e.cancelable) e.preventDefault();
     if (isConnected) {
+        triggerHaptic(30); // Subtle release click
         setTalking(false);
     }
   };
@@ -253,4 +268,30 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
                                 setSelectedPreset(preset);
                                 setShowSettings(false);
                             }}
-                            className={`w-full p-4 rounded-lg text-left font-mono text-sm border transition-all active:scale-95 ${selectedPreset.id === preset.id ? 'bg-zinc-800 border-emerald
+                            className={`w-full p-4 rounded-lg text-left font-mono text-sm border transition-all active:scale-95 ${selectedPreset.id === preset.id ? 'bg-zinc-800 border-emerald-500 text-emerald-400' : 'bg-transparent border-zinc-700 text-zinc-400 hover:bg-zinc-800'}`}
+                        >
+                            <div className="font-bold">{preset.name}</div>
+                            <div className="text-[10px] opacity-70 mt-1 line-clamp-2 leading-relaxed">{preset.systemInstruction}</div>
+                        </button>
+                    ))}
+                </div>
+                <button 
+                    onClick={() => setShowSettings(false)}
+                    className="mt-4 w-full py-4 bg-zinc-800 rounded-lg text-zinc-300 font-mono text-sm hover:bg-zinc-700 active:bg-zinc-600"
+                >
+                    CLOSE
+                </button>
+            </div>
+        )}
+
+      </div>
+      
+      {/* Footer Instructions */}
+      <div className="mb-4 text-center max-w-sm flex-shrink-0 px-4">
+        <p className="text-zinc-600 text-[10px]">
+            Mobile App Ready • Install via Share Menu
+        </p>
+      </div>
+    </div>
+  );
+};
