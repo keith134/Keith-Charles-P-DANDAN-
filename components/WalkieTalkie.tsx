@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, Power, Settings, Radio, Volume2, Info } from 'lucide-react';
+import { Mic, Power, Settings, Radio, Share2 } from 'lucide-react';
 import { ConnectionState, VoicePreset, AudioMode } from '../types';
 import { useGeminiLive } from '../hooks/useGeminiLive';
 import { VOICE_PRESETS } from '../constants';
@@ -10,7 +10,6 @@ interface WalkieTalkieProps {
 
 export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
   const [selectedPreset, setSelectedPreset] = useState<VoicePreset>(VOICE_PRESETS[0]);
-  const [audioMode, setAudioMode] = useState<AudioMode>(AudioMode.PUSH_TO_TALK);
   const [inputLevel, setInputLevel] = useState(0);
   const [outputLevel, setOutputLevel] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
@@ -95,6 +94,30 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
     if (isConnected) {
         triggerHaptic(30); // Subtle release click
         setTalking(false);
+    }
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const shareData = {
+        title: 'Gemini CommLink',
+        text: 'Connect to my frequency on Gemini CommLink!',
+        url: url
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+        } catch (err) {
+            console.log('Share aborted');
+        }
+    } else {
+        try {
+            await navigator.clipboard.writeText(url);
+            alert('Frequency Link copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy', err);
+        }
     }
   };
 
@@ -196,13 +219,15 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
             {/* Channel/Preset Dial */}
             <div className="col-span-1 flex flex-col items-center gap-2">
                 <label className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Channel</label>
-                <button 
-                    onClick={() => setShowSettings(!showSettings)}
-                    disabled={isConnected}
-                    className={`w-16 h-16 rounded-full bg-zinc-700 shadow-[0_4px_0_rgb(39,39,42),0_5px_10px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center border border-zinc-600 ${isConnected ? 'opacity-50 cursor-not-allowed' : 'hover:bg-zinc-650'}`}
-                >
-                    <Settings className="w-6 h-6 text-zinc-300" />
-                </button>
+                <div className="flex flex-col gap-2">
+                    <button 
+                        onClick={() => setShowSettings(!showSettings)}
+                        disabled={isConnected}
+                        className={`w-14 h-14 rounded-full bg-zinc-700 shadow-[0_4px_0_rgb(39,39,42),0_5px_10px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center border border-zinc-600 ${isConnected ? 'opacity-50 cursor-not-allowed' : 'hover:bg-zinc-650'}`}
+                    >
+                        <Settings className="w-5 h-5 text-zinc-300" />
+                    </button>
+                </div>
             </div>
 
             {/* Main PTT Button */}
@@ -245,9 +270,20 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
                 </button>
             </div>
         </div>
+        
+        {/* Share Button (Small) */}
+        <div className="absolute bottom-6 left-8">
+            <button 
+                onClick={handleShare}
+                className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-600 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors shadow-lg active:scale-95"
+                title="Share Frequency"
+            >
+                <Share2 className="w-4 h-4" />
+            </button>
+        </div>
 
         {/* Speaker Mesh */}
-        <div className="w-full h-24 bg-zinc-900 rounded-xl speaker-grille shadow-inner border border-zinc-700/50 flex items-center justify-center">
+        <div className="w-full h-24 bg-zinc-900 rounded-xl speaker-grille shadow-inner border border-zinc-700/50 flex items-center justify-center pointer-events-none">
             <div className="w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center opacity-30">
                 <div className="w-8 h-8 rounded-full border border-zinc-700"></div>
             </div>
@@ -289,7 +325,7 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ apiKey }) => {
       {/* Footer Instructions */}
       <div className="mb-4 text-center max-w-sm flex-shrink-0 px-4">
         <p className="text-zinc-600 text-[10px]">
-            Mobile App Ready • Install via Share Menu
+            Mobile App Ready • Tap Share to Invite
         </p>
       </div>
     </div>
